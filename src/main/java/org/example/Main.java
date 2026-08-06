@@ -16,5 +16,6 @@ public class Main {
         myFriend.setFirstName("Elizaveta");
 
         System.out.println(myFriend);
+
     }
 }
