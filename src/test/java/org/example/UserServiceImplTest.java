@@ -2,7 +2,7 @@ package org.example;
 
 import org.example.model.User;
 import org.example.service.EmailService;
-import org.example.service.UserNotFoundException;
+import org.example.exception.UserNotFoundException;
 import org.example.service.UserRepository;
 import org.example.service.UserServiceImpl;
 import org.junit.jupiter.api.AfterAll;
