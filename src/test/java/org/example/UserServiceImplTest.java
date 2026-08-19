@@ -2,14 +2,15 @@ package org.example;
 
 import org.example.model.User;
 import org.example.service.EmailService;
-import org.example.exception.UserNotFoundException;
-import org.example.service.UserRepository;
+import org.example.service.exception.UserNotFoundException;
+import org.example.repository.UserRepository;
 import org.example.service.UserServiceImpl;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -67,6 +68,21 @@ public class UserServiceImplTest {
 
         assertEquals("Аня", result.getName());
         verify(emailService).sendEmail(eq("anya@mail.com"), anyString());
+    }
+
+    @Test
+    @DisplayName("createUser передаёт в repository.save() пользователя с правильными полями")
+    void createUser_validData_passesCorrectUserToRepository() {
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        userService.createUser("Борис", "boris@mail.com");
+
+        ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
+        verify(userRepository).save(captor.capture());
+
+        User captured = captor.getValue();
+        assertEquals("Борис", captured.getName());
+        assertEquals("boris@mail.com", captured.getEmail());
     }
 
     @Test

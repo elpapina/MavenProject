@@ -1,7 +1,8 @@
 package org.example.service;
 
-import org.example.exception.UserNotFoundException;
+import org.example.service.exception.UserNotFoundException;
 import org.example.model.User;
+import org.example.repository.UserRepository;
 
 import java.util.Optional;
 
